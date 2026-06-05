@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>유사프로젝트 검색</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { display: flex; flex-direction: column; height: 100vh; background: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", sans-serif; }
+  .apptabs { flex: 0 0 auto; display: flex; gap: 2px; align-items: center; background: #0f172a; padding: 7px 14px 0; }
+  .apptab { appearance: none; display: inline-block; padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #94a3b8; background: transparent; border: none; border-radius: 8px 8px 0 0; cursor: pointer;
+    transition: background .15s, color .15s; }
+  .apptab:hover { color: #e2e8f0; background: rgba(255,255,255,.07); }
+  .apptab.active { color: #1a2233; background: #f6f7fb; cursor: default; }
+  .apptab .spin { display: none; width: 11px; height: 11px; margin-left: 7px; vertical-align: -1px;
+    border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: sp .7s linear infinite; }
+  .apptab.busy .spin { display: inline-block; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  .frames { flex: 1 1 auto; position: relative; background: #f6f7fb; }
+  .frames iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: none; }
+  .frames iframe.active { display: block; }
+</style>
+</head>
+<body>
+<nav class="apptabs">
+  <button class="apptab active" data-tab="b">🏢 건축물대장 <span class="spin"></span></button>
+  <button class="apptab" data-tab="c">🏗️ 리모델링 계약정보 <span class="spin"></span></button>
+</nav>
+<div class="frames">
+  <iframe id="frame-b" class="active" src="유사프로젝트%20검색.html?v=20260602" title="건축물대장"></iframe>
+  <iframe id="frame-c" src="유사프로젝트%20검색(리모델링-계약정보).html?v=20260602" title="리모델링 계약정보"></iframe>
+</div>
+<script>
+  // 두 도구를 동시에 iframe으로 띄워두고, 탭은 화면만 전환한다(숨겨도 src를 유지하므로
+  // 백그라운드 검색이 계속 진행됨). 각 도구는 부모(top)와 같으면 자체 탭바를 숨긴다.
+  var tabs = document.querySelectorAll('.apptab');
+  var frames = { b: document.getElementById('frame-b'), c: document.getElementById('frame-c') };
+  document.querySelector('.apptabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('.apptab'); if (!btn) return;
+    var t = btn.dataset.tab;
+    tabs.forEach(function (x) { x.classList.toggle('active', x === btn); });
+    for (var k in frames) frames[k].classList.toggle('active', k === t);
+  });
+  // 자식 도구가 검색 진행상태를 알려오면 해당 탭에 스피너 표시 (백그라운드에서 도는 중임을 시각화)
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || d.type !== 'searchState') return;
+    var btn = document.querySelector('.apptab[data-tab="' + (d.tool === 'building' ? 'b' : 'c') + '"]');
+    if (btn) btn.classList.toggle('busy', !!d.searching);
+  });
+</script>
+</body>
+</html>
