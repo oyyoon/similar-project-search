@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 모니터 받침 -->
+  <rect x="26" y="50" width="12" height="6" fill="#9aa3ad"/>
+  <rect x="18" y="55" width="28" height="4" rx="2" fill="#7b8590"/>
+  <!-- 모니터 본체 -->
+  <rect x="6" y="12" width="52" height="36" rx="4" fill="#2b3440"/>
+  <rect x="10" y="16" width="44" height="28" rx="2" fill="#eaf2fb"/>
+  <!-- 문서(텍스트 줄) -->
+  <g stroke="#2b3440" stroke-width="2.4" stroke-linecap="round">
+    <line x1="16" y1="22" x2="34" y2="22"/>
+    <line x1="16" y1="28" x2="40" y2="28"/>
+    <line x1="16" y1="34" x2="38" y2="34"/>
+    <line x1="16" y1="40" x2="30" y2="40"/>
+  </g>
+  <!-- 빨간 위치핀 -->
+  <path d="M44 6c-6.6 0-12 5.2-12 11.6 0 8.3 12 18.4 12 18.4s12-10.1 12-18.4C56 11.2 50.6 6 44 6z" fill="#e64a3b" stroke="#2b3440" stroke-width="2.2"/>
+  <circle cx="44" cy="17.5" r="4.6" fill="#eaf2fb" stroke="#2b3440" stroke-width="2.2"/>
+</svg>
